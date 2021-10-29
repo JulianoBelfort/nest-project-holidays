@@ -35,10 +35,7 @@ export class HolidaysService {
     }
   }
 
-  async updateHolidayById(
-    id: number,
-    holidayDto: HolidayDto,
-  ): Promise<Holiday> {
+  async updateHolidayById(id: number, holidayDto: HolidayDto): Promise<Holiday> {
     return await this.holidayRepository.updateHoliday(id, holidayDto);
   }
 }
