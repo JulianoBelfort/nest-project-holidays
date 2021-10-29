@@ -1,0 +1,47 @@
+/*Correção pretier "Delete CR" -> yarn lint --fix*/
+/*tsconfig.json -> "strict": false*/
+/*monitoramento de log -> pm2*/
+
+instalar e criar novo projeto nest:
+  -npm i -g @nestjs/cli
+  -nest new {project-name}
+executar e validar funcionamento:
+  -npm run start
+/_organizaçao da arquitetura da solução do projeto_/
+criar os Modules do projeto:
+  -nest g module {module-name}
+/_endpoints_/
+criar os Controllers do projeto:
+  -nest g controller {controller-name}
+/_regras de negócios_/
+criar os Services do projeto:
+  -nest g service {services-name}
+criar os Model do projeto:
+  -add file na pasta {nome_model}.model.ts
+  -geralmente para gerar ids -> uuid.v4() -> add to tsconfig {"moduleResolution": "node"}
+utilizar Data Transfer Object (DTO) nos Controllers (padronização)
+  -criar uma pasta dto e arquivo {nome_dto.dto.ts}
+  -importar no controller e no services para padronizar entradas
+para responses e requests usar @Body, @Params ou {Response e Request} do Express?
+instalar o typeorm para o BD desejado
+  -npm install @nestjs/typeorm typeorm pg
+criar a pasta config e o arquivo typeorm.config.ts
+  -passar como paramêtro as variáveis de conexão com o BD
+  -Entidades: tabela e estrutura (Model)
+  -Repositório: uma ou mais tabelas
+  -localizar as entidades: entities: [__dirname + '/../**/*.entity.js']
+  -synchronize: true caso queira que as alterações reflitam automaticamente no BD (desenvolvimento)
+criar as entities {entity-name}.entity.ts
+  -responsável por validar todas as informações enviadas quando comparadas com o BD
+criar repositories {entity-name}.repository.ts
+  -reponsável por uma ou mais entidades
+  -comunicação e caminho com o BD
+  -validação de regras de negócio do BD
+importar TypeOrmModule.forFeature([{repository-name}]) para o {module-name}.module.ts
+refatorar o código antes de 'integrar' com o BD -> confirmar funcionamento do código
+  -comentar todas as rotas no services e no controller
+  -com serviços e rotas desativos
+    -refatorar o Model para o entity (no caso de enum criar {nome_enum}.enum.ts)
+    -trazer repositórios para o services (Injeção de Dependências)
+    -A partir da comunicação com o BD os services precisam retornar uma Promise 
+    -REGRA DE NEGÓCIOS -> SERVICES, REGRA DE NEGÓCIOS BD -> REPOSITORY
